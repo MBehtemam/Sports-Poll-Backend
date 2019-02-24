@@ -1,0 +1,19 @@
+type User {
+  id: ID! @unique
+  name: String!
+  email: String!
+}
+type Country {
+  id: ID! @unique
+  name: String!
+  flag: String!
+}
+type Group {
+  id: ID! @unique
+  name: String!
+}
+type Sport {
+  id: ID! @unique
+  name: String!
+  icon: String!
+}
