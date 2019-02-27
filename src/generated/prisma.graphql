@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/mohammad-bagher-ehtemam-c9a645/Sports-Poll-Backend/dev
-# timestamp: Mon Feb 25 2019 01:52:14 GMT+0330 (Iran Standard Time)
+# timestamp: Wed Feb 27 2019 23:08:42 GMT+0330 (Iran Standard Time)
 
 type AggregateCountry {
   count: Int!
@@ -9,7 +9,15 @@ type AggregateGroup {
   count: Int!
 }
 
+type AggregatePoll {
+  count: Int!
+}
+
 type AggregateSport {
+  count: Int!
+}
+
+type AggregateTeam {
   count: Int!
 }
 
@@ -41,6 +49,11 @@ type CountryConnection {
 input CountryCreateInput {
   name: String!
   flag: String!
+}
+
+input CountryCreateOneInput {
+  create: CountryCreateInput
+  connect: CountryWhereUniqueInput
 }
 
 """An edge in a connection."""
@@ -110,6 +123,11 @@ input CountrySubscriptionWhereInput {
   node: CountryWhereInput
 }
 
+input CountryUpdateDataInput {
+  name: String
+  flag: String
+}
+
 input CountryUpdateInput {
   name: String
   flag: String
@@ -118,6 +136,18 @@ input CountryUpdateInput {
 input CountryUpdateManyMutationInput {
   name: String
   flag: String
+}
+
+input CountryUpdateOneRequiredInput {
+  create: CountryCreateInput
+  connect: CountryWhereUniqueInput
+  update: CountryUpdateDataInput
+  upsert: CountryUpsertNestedInput
+}
+
+input CountryUpsertNestedInput {
+  update: CountryUpdateDataInput!
+  create: CountryCreateInput!
 }
 
 input CountryWhereInput {
@@ -274,6 +304,11 @@ input GroupCreateInput {
   name: String!
 }
 
+input GroupCreateOneInput {
+  create: GroupCreateInput
+  connect: GroupWhereUniqueInput
+}
+
 """An edge in a connection."""
 type GroupEdge {
   """The item at the end of the edge."""
@@ -338,12 +373,28 @@ input GroupSubscriptionWhereInput {
   node: GroupWhereInput
 }
 
+input GroupUpdateDataInput {
+  name: String
+}
+
 input GroupUpdateInput {
   name: String
 }
 
 input GroupUpdateManyMutationInput {
   name: String
+}
+
+input GroupUpdateOneRequiredInput {
+  create: GroupCreateInput
+  connect: GroupWhereUniqueInput
+  update: GroupUpdateDataInput
+  upsert: GroupUpsertNestedInput
+}
+
+input GroupUpsertNestedInput {
+  update: GroupUpdateDataInput!
+  create: GroupCreateInput!
 }
 
 input GroupWhereInput {
@@ -449,29 +500,41 @@ scalar Long
 
 type Mutation {
   createUser(data: UserCreateInput!): User!
+  createSport(data: SportCreateInput!): Sport!
+  createPoll(data: PollCreateInput!): Poll!
   createCountry(data: CountryCreateInput!): Country!
   createGroup(data: GroupCreateInput!): Group!
-  createSport(data: SportCreateInput!): Sport!
+  createTeam(data: TeamCreateInput!): Team!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  updateSport(data: SportUpdateInput!, where: SportWhereUniqueInput!): Sport
+  updatePoll(data: PollUpdateInput!, where: PollWhereUniqueInput!): Poll
   updateCountry(data: CountryUpdateInput!, where: CountryWhereUniqueInput!): Country
   updateGroup(data: GroupUpdateInput!, where: GroupWhereUniqueInput!): Group
-  updateSport(data: SportUpdateInput!, where: SportWhereUniqueInput!): Sport
+  updateTeam(data: TeamUpdateInput!, where: TeamWhereUniqueInput!): Team
   deleteUser(where: UserWhereUniqueInput!): User
+  deleteSport(where: SportWhereUniqueInput!): Sport
+  deletePoll(where: PollWhereUniqueInput!): Poll
   deleteCountry(where: CountryWhereUniqueInput!): Country
   deleteGroup(where: GroupWhereUniqueInput!): Group
-  deleteSport(where: SportWhereUniqueInput!): Sport
+  deleteTeam(where: TeamWhereUniqueInput!): Team
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  upsertSport(where: SportWhereUniqueInput!, create: SportCreateInput!, update: SportUpdateInput!): Sport!
+  upsertPoll(where: PollWhereUniqueInput!, create: PollCreateInput!, update: PollUpdateInput!): Poll!
   upsertCountry(where: CountryWhereUniqueInput!, create: CountryCreateInput!, update: CountryUpdateInput!): Country!
   upsertGroup(where: GroupWhereUniqueInput!, create: GroupCreateInput!, update: GroupUpdateInput!): Group!
-  upsertSport(where: SportWhereUniqueInput!, create: SportCreateInput!, update: SportUpdateInput!): Sport!
+  upsertTeam(where: TeamWhereUniqueInput!, create: TeamCreateInput!, update: TeamUpdateInput!): Team!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
+  updateManySports(data: SportUpdateManyMutationInput!, where: SportWhereInput): BatchPayload!
+  updateManyPolls(data: PollUpdateManyMutationInput!, where: PollWhereInput): BatchPayload!
   updateManyCountries(data: CountryUpdateManyMutationInput!, where: CountryWhereInput): BatchPayload!
   updateManyGroups(data: GroupUpdateManyMutationInput!, where: GroupWhereInput): BatchPayload!
-  updateManySports(data: SportUpdateManyMutationInput!, where: SportWhereInput): BatchPayload!
+  updateManyTeams(data: TeamUpdateManyMutationInput!, where: TeamWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
+  deleteManySports(where: SportWhereInput): BatchPayload!
+  deleteManyPolls(where: PollWhereInput): BatchPayload!
   deleteManyCountries(where: CountryWhereInput): BatchPayload!
   deleteManyGroups(where: GroupWhereInput): BatchPayload!
-  deleteManySports(where: SportWhereInput): BatchPayload!
+  deleteManyTeams(where: TeamWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -501,19 +564,203 @@ type PageInfo {
   endCursor: String
 }
 
+type Poll implements Node {
+  id: ID!
+  away: Team!
+  home: Team!
+  group: Group!
+  country: Country!
+  state: PollState!
+}
+
+"""A connection to a list of items."""
+type PollConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [PollEdge]!
+  aggregate: AggregatePoll!
+}
+
+input PollCreateInput {
+  state: PollState!
+  away: TeamCreateOneInput!
+  home: TeamCreateOneInput!
+  group: GroupCreateOneInput!
+  country: CountryCreateOneInput!
+}
+
+"""An edge in a connection."""
+type PollEdge {
+  """The item at the end of the edge."""
+  node: Poll!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum PollOrderByInput {
+  id_ASC
+  id_DESC
+  state_ASC
+  state_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type PollPreviousValues {
+  id: ID!
+  state: PollState!
+}
+
+enum PollState {
+  STARTED
+  FINISHED
+  NOT_STARTED
+}
+
+type PollSubscriptionPayload {
+  mutation: MutationType!
+  node: Poll
+  updatedFields: [String!]
+  previousValues: PollPreviousValues
+}
+
+input PollSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [PollSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [PollSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [PollSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: PollWhereInput
+}
+
+input PollUpdateInput {
+  state: PollState
+  away: TeamUpdateOneRequiredInput
+  home: TeamUpdateOneRequiredInput
+  group: GroupUpdateOneRequiredInput
+  country: CountryUpdateOneRequiredInput
+}
+
+input PollUpdateManyMutationInput {
+  state: PollState
+}
+
+input PollWhereInput {
+  """Logical AND on all given filters."""
+  AND: [PollWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [PollWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [PollWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  state: PollState
+
+  """All values that are not equal to given value."""
+  state_not: PollState
+
+  """All values that are contained in given list."""
+  state_in: [PollState!]
+
+  """All values that are not contained in given list."""
+  state_not_in: [PollState!]
+  away: TeamWhereInput
+  home: TeamWhereInput
+  group: GroupWhereInput
+  country: CountryWhereInput
+}
+
+input PollWhereUniqueInput {
+  id: ID
+}
+
 type Query {
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  sports(where: SportWhereInput, orderBy: SportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Sport]!
+  polls(where: PollWhereInput, orderBy: PollOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Poll]!
   countries(where: CountryWhereInput, orderBy: CountryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Country]!
   groups(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Group]!
-  sports(where: SportWhereInput, orderBy: SportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Sport]!
+  teams(where: TeamWhereInput, orderBy: TeamOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Team]!
   user(where: UserWhereUniqueInput!): User
+  sport(where: SportWhereUniqueInput!): Sport
+  poll(where: PollWhereUniqueInput!): Poll
   country(where: CountryWhereUniqueInput!): Country
   group(where: GroupWhereUniqueInput!): Group
-  sport(where: SportWhereUniqueInput!): Sport
+  team(where: TeamWhereUniqueInput!): Team
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  sportsConnection(where: SportWhereInput, orderBy: SportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SportConnection!
+  pollsConnection(where: PollWhereInput, orderBy: PollOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PollConnection!
   countriesConnection(where: CountryWhereInput, orderBy: CountryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CountryConnection!
   groupsConnection(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): GroupConnection!
-  sportsConnection(where: SportWhereInput, orderBy: SportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SportConnection!
+  teamsConnection(where: TeamWhereInput, orderBy: TeamOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TeamConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -757,9 +1004,218 @@ input SportWhereUniqueInput {
 
 type Subscription {
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+  sport(where: SportSubscriptionWhereInput): SportSubscriptionPayload
+  poll(where: PollSubscriptionWhereInput): PollSubscriptionPayload
   country(where: CountrySubscriptionWhereInput): CountrySubscriptionPayload
   group(where: GroupSubscriptionWhereInput): GroupSubscriptionPayload
-  sport(where: SportSubscriptionWhereInput): SportSubscriptionPayload
+  team(where: TeamSubscriptionWhereInput): TeamSubscriptionPayload
+}
+
+type Team implements Node {
+  id: ID!
+  name: String!
+}
+
+"""A connection to a list of items."""
+type TeamConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [TeamEdge]!
+  aggregate: AggregateTeam!
+}
+
+input TeamCreateInput {
+  name: String!
+}
+
+input TeamCreateOneInput {
+  create: TeamCreateInput
+  connect: TeamWhereUniqueInput
+}
+
+"""An edge in a connection."""
+type TeamEdge {
+  """The item at the end of the edge."""
+  node: Team!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum TeamOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type TeamPreviousValues {
+  id: ID!
+  name: String!
+}
+
+type TeamSubscriptionPayload {
+  mutation: MutationType!
+  node: Team
+  updatedFields: [String!]
+  previousValues: TeamPreviousValues
+}
+
+input TeamSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TeamSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TeamSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TeamSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: TeamWhereInput
+}
+
+input TeamUpdateDataInput {
+  name: String
+}
+
+input TeamUpdateInput {
+  name: String
+}
+
+input TeamUpdateManyMutationInput {
+  name: String
+}
+
+input TeamUpdateOneRequiredInput {
+  create: TeamCreateInput
+  connect: TeamWhereUniqueInput
+  update: TeamUpdateDataInput
+  upsert: TeamUpsertNestedInput
+}
+
+input TeamUpsertNestedInput {
+  update: TeamUpdateDataInput!
+  create: TeamCreateInput!
+}
+
+input TeamWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TeamWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TeamWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TeamWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+}
+
+input TeamWhereUniqueInput {
+  id: ID
 }
 
 type User implements Node {

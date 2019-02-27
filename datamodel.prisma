@@ -2,6 +2,7 @@ type User {
   id: ID! @unique
   name: String!
   email: String!
+  polls: [Polls]
 }
 type Country {
   id: ID! @unique
@@ -16,4 +17,22 @@ type Sport {
   id: ID! @unique
   name: String!
   icon: String!
+}
+enum PollState {
+  STARTED
+  FINISHED
+  NOT_STARTED
+}
+type Team {
+  id: ID! @unique
+  name: String!
+}
+type Poll {
+  id: ID! @unique
+  away: Team! @relation(name: "AwayTeam")
+  home: Team! @relation(name: "HomeTeam")
+  group: Group!
+  country: Country!
+  state: PollState!
+  users: [User]
 }
