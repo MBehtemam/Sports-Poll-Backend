@@ -2,9 +2,11 @@
 type Mutation {
   createCountry(name: String, flag: String): Country!
   createGroup(name: String): Group!
+  createSport(name: String, icon: String): Sport!
 }
 
 type Query {
   countries: [Country]
   groups: [Group]
+  sports: [Sport]
 }
