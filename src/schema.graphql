@@ -1,0 +1,8 @@
+# import * from './generated/prisma.graphql'
+type Mutation {
+  createCountry(data: CountryCreateInput!): Country!
+}
+
+type Query {
+  countries: [Country]!
+}
