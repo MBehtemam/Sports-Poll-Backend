@@ -1,6 +1,7 @@
 # import * from './generated/prisma.graphql'
 type Mutation {
   createCountry(name: String, flag: String): Country!
+  createGroup(name: String): Group!
 }
 
 type Query {
