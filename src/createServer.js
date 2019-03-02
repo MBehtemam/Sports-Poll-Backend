@@ -13,7 +13,7 @@ const createServer = () => {
     resolverValidationOptions: {
       requireResolversForResolveType: false
     },
-    context: req => ({ ...req, db })
+    context: req => ({ ...req, db }) //here we pass db with ctx
   });
 };
 module.exports = createServer;

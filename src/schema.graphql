@@ -1,6 +1,6 @@
 # import * from './generated/prisma.graphql'
 type Mutation {
-  createCountry(data: CountryCreateInput!): Country!
+  createCountry(name: String, flag: String): Country!
 }
 
 type Query {
