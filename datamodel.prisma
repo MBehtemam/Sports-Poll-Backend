@@ -1,8 +1,10 @@
 type User {
   id: ID! @unique
   name: String!
-  email: String!
-  polls: [Polls]
+  email: String! @unique
+  password: String!
+  polls: [Poll] @relation(name: "Poll")
+  permissions: [Permission]
 }
 type Country {
   id: ID! @unique
@@ -18,21 +20,38 @@ type Sport {
   name: String!
   icon: String!
 }
-enum PollState {
-  STARTED
-  FINISHED
-  NOT_STARTED
+type PollState {
+  id: ID! @unique
+  name: String! @unique
+  value: String! @unique
 }
 type Team {
   id: ID! @unique
   name: String!
 }
+enum PollResult {
+  HOME_WIN
+  AWAY_WIN
+  DRAW
+}
+type UserPoll {
+  id: ID! @unique
+  user: User
+  predict: PollResult
+}
 type Poll {
   id: ID! @unique
-  away: Team! @relation(name: "AwayTeam")
-  home: Team! @relation(name: "HomeTeam")
+  away: Team @relation(name: "AwayTeam")
+  home: Team @relation(name: "HomeTeam")
   group: Group!
   country: Country!
-  state: PollState!
-  users: [User]
+  sport: Sport!
+  result: PollResult
+  state: PollState! @relation(name: "PollState")
+  users: [User] @relation(name: "Users")
+  usersPrediction: [UserPoll] @relation(name: "UserPoll")
+}
+enum Permission {
+  ADMIN
+  USER
 }

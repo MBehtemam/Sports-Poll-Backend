@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/mohammad-bagher-ehtemam-c9a645/Sports-Poll-Backend/dev
-# timestamp: Wed Feb 27 2019 23:08:42 GMT+0330 (Iran Standard Time)
+# timestamp: Mon Mar 04 2019 07:05:33 GMT+0330 (Iran Standard Time)
 
 type AggregateCountry {
   count: Int!
@@ -13,6 +13,10 @@ type AggregatePoll {
   count: Int!
 }
 
+type AggregatePollState {
+  count: Int!
+}
+
 type AggregateSport {
   count: Int!
 }
@@ -22,6 +26,10 @@ type AggregateTeam {
 }
 
 type AggregateUser {
+  count: Int!
+}
+
+type AggregateUserPoll {
   count: Int!
 }
 
@@ -499,42 +507,54 @@ Long can represent values between -(2^63) and 2^63 - 1.
 scalar Long
 
 type Mutation {
-  createUser(data: UserCreateInput!): User!
-  createSport(data: SportCreateInput!): Sport!
-  createPoll(data: PollCreateInput!): Poll!
+  createUserPoll(data: UserPollCreateInput!): UserPoll!
   createCountry(data: CountryCreateInput!): Country!
-  createGroup(data: GroupCreateInput!): Group!
   createTeam(data: TeamCreateInput!): Team!
-  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
-  updateSport(data: SportUpdateInput!, where: SportWhereUniqueInput!): Sport
-  updatePoll(data: PollUpdateInput!, where: PollWhereUniqueInput!): Poll
+  createGroup(data: GroupCreateInput!): Group!
+  createSport(data: SportCreateInput!): Sport!
+  createUser(data: UserCreateInput!): User!
+  createPollState(data: PollStateCreateInput!): PollState!
+  createPoll(data: PollCreateInput!): Poll!
+  updateUserPoll(data: UserPollUpdateInput!, where: UserPollWhereUniqueInput!): UserPoll
   updateCountry(data: CountryUpdateInput!, where: CountryWhereUniqueInput!): Country
-  updateGroup(data: GroupUpdateInput!, where: GroupWhereUniqueInput!): Group
   updateTeam(data: TeamUpdateInput!, where: TeamWhereUniqueInput!): Team
-  deleteUser(where: UserWhereUniqueInput!): User
-  deleteSport(where: SportWhereUniqueInput!): Sport
-  deletePoll(where: PollWhereUniqueInput!): Poll
+  updateGroup(data: GroupUpdateInput!, where: GroupWhereUniqueInput!): Group
+  updateSport(data: SportUpdateInput!, where: SportWhereUniqueInput!): Sport
+  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  updatePollState(data: PollStateUpdateInput!, where: PollStateWhereUniqueInput!): PollState
+  updatePoll(data: PollUpdateInput!, where: PollWhereUniqueInput!): Poll
+  deleteUserPoll(where: UserPollWhereUniqueInput!): UserPoll
   deleteCountry(where: CountryWhereUniqueInput!): Country
-  deleteGroup(where: GroupWhereUniqueInput!): Group
   deleteTeam(where: TeamWhereUniqueInput!): Team
-  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
-  upsertSport(where: SportWhereUniqueInput!, create: SportCreateInput!, update: SportUpdateInput!): Sport!
-  upsertPoll(where: PollWhereUniqueInput!, create: PollCreateInput!, update: PollUpdateInput!): Poll!
+  deleteGroup(where: GroupWhereUniqueInput!): Group
+  deleteSport(where: SportWhereUniqueInput!): Sport
+  deleteUser(where: UserWhereUniqueInput!): User
+  deletePollState(where: PollStateWhereUniqueInput!): PollState
+  deletePoll(where: PollWhereUniqueInput!): Poll
+  upsertUserPoll(where: UserPollWhereUniqueInput!, create: UserPollCreateInput!, update: UserPollUpdateInput!): UserPoll!
   upsertCountry(where: CountryWhereUniqueInput!, create: CountryCreateInput!, update: CountryUpdateInput!): Country!
-  upsertGroup(where: GroupWhereUniqueInput!, create: GroupCreateInput!, update: GroupUpdateInput!): Group!
   upsertTeam(where: TeamWhereUniqueInput!, create: TeamCreateInput!, update: TeamUpdateInput!): Team!
-  updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
-  updateManySports(data: SportUpdateManyMutationInput!, where: SportWhereInput): BatchPayload!
-  updateManyPolls(data: PollUpdateManyMutationInput!, where: PollWhereInput): BatchPayload!
+  upsertGroup(where: GroupWhereUniqueInput!, create: GroupCreateInput!, update: GroupUpdateInput!): Group!
+  upsertSport(where: SportWhereUniqueInput!, create: SportCreateInput!, update: SportUpdateInput!): Sport!
+  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  upsertPollState(where: PollStateWhereUniqueInput!, create: PollStateCreateInput!, update: PollStateUpdateInput!): PollState!
+  upsertPoll(where: PollWhereUniqueInput!, create: PollCreateInput!, update: PollUpdateInput!): Poll!
+  updateManyUserPolls(data: UserPollUpdateManyMutationInput!, where: UserPollWhereInput): BatchPayload!
   updateManyCountries(data: CountryUpdateManyMutationInput!, where: CountryWhereInput): BatchPayload!
-  updateManyGroups(data: GroupUpdateManyMutationInput!, where: GroupWhereInput): BatchPayload!
   updateManyTeams(data: TeamUpdateManyMutationInput!, where: TeamWhereInput): BatchPayload!
-  deleteManyUsers(where: UserWhereInput): BatchPayload!
-  deleteManySports(where: SportWhereInput): BatchPayload!
-  deleteManyPolls(where: PollWhereInput): BatchPayload!
+  updateManyGroups(data: GroupUpdateManyMutationInput!, where: GroupWhereInput): BatchPayload!
+  updateManySports(data: SportUpdateManyMutationInput!, where: SportWhereInput): BatchPayload!
+  updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
+  updateManyPollStates(data: PollStateUpdateManyMutationInput!, where: PollStateWhereInput): BatchPayload!
+  updateManyPolls(data: PollUpdateManyMutationInput!, where: PollWhereInput): BatchPayload!
+  deleteManyUserPolls(where: UserPollWhereInput): BatchPayload!
   deleteManyCountries(where: CountryWhereInput): BatchPayload!
-  deleteManyGroups(where: GroupWhereInput): BatchPayload!
   deleteManyTeams(where: TeamWhereInput): BatchPayload!
+  deleteManyGroups(where: GroupWhereInput): BatchPayload!
+  deleteManySports(where: SportWhereInput): BatchPayload!
+  deleteManyUsers(where: UserWhereInput): BatchPayload!
+  deleteManyPollStates(where: PollStateWhereInput): BatchPayload!
+  deleteManyPolls(where: PollWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -564,13 +584,22 @@ type PageInfo {
   endCursor: String
 }
 
+enum Permission {
+  ADMIN
+  USER
+}
+
 type Poll implements Node {
   id: ID!
-  away: Team!
-  home: Team!
+  away: Team
+  home: Team
   group: Group!
   country: Country!
+  sport: Sport!
+  result: PollResult
   state: PollState!
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  usersPrediction(where: UserPollWhereInput, orderBy: UserPollOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [UserPoll!]
 }
 
 """A connection to a list of items."""
@@ -584,11 +613,20 @@ type PollConnection {
 }
 
 input PollCreateInput {
-  state: PollState!
-  away: TeamCreateOneInput!
-  home: TeamCreateOneInput!
+  result: PollResult
+  away: TeamCreateOneInput
+  home: TeamCreateOneInput
   group: GroupCreateOneInput!
   country: CountryCreateOneInput!
+  sport: SportCreateOneInput!
+  state: PollStateCreateOneInput!
+  users: UserCreateManyInput
+  usersPrediction: UserPollCreateManyInput
+}
+
+input PollCreateManyInput {
+  create: [PollCreateInput!]
+  connect: [PollWhereUniqueInput!]
 }
 
 """An edge in a connection."""
@@ -603,8 +641,8 @@ type PollEdge {
 enum PollOrderByInput {
   id_ASC
   id_DESC
-  state_ASC
-  state_DESC
+  result_ASC
+  result_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -613,13 +651,331 @@ enum PollOrderByInput {
 
 type PollPreviousValues {
   id: ID!
-  state: PollState!
+  result: PollResult
 }
 
-enum PollState {
-  STARTED
-  FINISHED
-  NOT_STARTED
+enum PollResult {
+  HOME_WIN
+  AWAY_WIN
+  DRAW
+}
+
+input PollScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [PollScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [PollScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [PollScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  result: PollResult
+
+  """All values that are not equal to given value."""
+  result_not: PollResult
+
+  """All values that are contained in given list."""
+  result_in: [PollResult!]
+
+  """All values that are not contained in given list."""
+  result_not_in: [PollResult!]
+}
+
+type PollState implements Node {
+  id: ID!
+  name: String!
+  value: String!
+}
+
+"""A connection to a list of items."""
+type PollStateConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [PollStateEdge]!
+  aggregate: AggregatePollState!
+}
+
+input PollStateCreateInput {
+  name: String!
+  value: String!
+}
+
+input PollStateCreateOneInput {
+  create: PollStateCreateInput
+  connect: PollStateWhereUniqueInput
+}
+
+"""An edge in a connection."""
+type PollStateEdge {
+  """The item at the end of the edge."""
+  node: PollState!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum PollStateOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  value_ASC
+  value_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type PollStatePreviousValues {
+  id: ID!
+  name: String!
+  value: String!
+}
+
+type PollStateSubscriptionPayload {
+  mutation: MutationType!
+  node: PollState
+  updatedFields: [String!]
+  previousValues: PollStatePreviousValues
+}
+
+input PollStateSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [PollStateSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [PollStateSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [PollStateSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: PollStateWhereInput
+}
+
+input PollStateUpdateDataInput {
+  name: String
+  value: String
+}
+
+input PollStateUpdateInput {
+  name: String
+  value: String
+}
+
+input PollStateUpdateManyMutationInput {
+  name: String
+  value: String
+}
+
+input PollStateUpdateOneRequiredInput {
+  create: PollStateCreateInput
+  connect: PollStateWhereUniqueInput
+  update: PollStateUpdateDataInput
+  upsert: PollStateUpsertNestedInput
+}
+
+input PollStateUpsertNestedInput {
+  update: PollStateUpdateDataInput!
+  create: PollStateCreateInput!
+}
+
+input PollStateWhereInput {
+  """Logical AND on all given filters."""
+  AND: [PollStateWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [PollStateWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [PollStateWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  value: String
+
+  """All values that are not equal to given value."""
+  value_not: String
+
+  """All values that are contained in given list."""
+  value_in: [String!]
+
+  """All values that are not contained in given list."""
+  value_not_in: [String!]
+
+  """All values less than the given value."""
+  value_lt: String
+
+  """All values less than or equal the given value."""
+  value_lte: String
+
+  """All values greater than the given value."""
+  value_gt: String
+
+  """All values greater than or equal the given value."""
+  value_gte: String
+
+  """All values containing the given string."""
+  value_contains: String
+
+  """All values not containing the given string."""
+  value_not_contains: String
+
+  """All values starting with the given string."""
+  value_starts_with: String
+
+  """All values not starting with the given string."""
+  value_not_starts_with: String
+
+  """All values ending with the given string."""
+  value_ends_with: String
+
+  """All values not ending with the given string."""
+  value_not_ends_with: String
+}
+
+input PollStateWhereUniqueInput {
+  id: ID
+  name: String
+  value: String
 }
 
 type PollSubscriptionPayload {
@@ -661,16 +1017,64 @@ input PollSubscriptionWhereInput {
   node: PollWhereInput
 }
 
-input PollUpdateInput {
-  state: PollState
-  away: TeamUpdateOneRequiredInput
-  home: TeamUpdateOneRequiredInput
+input PollUpdateDataInput {
+  result: PollResult
+  away: TeamUpdateOneInput
+  home: TeamUpdateOneInput
   group: GroupUpdateOneRequiredInput
   country: CountryUpdateOneRequiredInput
+  sport: SportUpdateOneRequiredInput
+  state: PollStateUpdateOneRequiredInput
+  users: UserUpdateManyInput
+  usersPrediction: UserPollUpdateManyInput
+}
+
+input PollUpdateInput {
+  result: PollResult
+  away: TeamUpdateOneInput
+  home: TeamUpdateOneInput
+  group: GroupUpdateOneRequiredInput
+  country: CountryUpdateOneRequiredInput
+  sport: SportUpdateOneRequiredInput
+  state: PollStateUpdateOneRequiredInput
+  users: UserUpdateManyInput
+  usersPrediction: UserPollUpdateManyInput
+}
+
+input PollUpdateManyDataInput {
+  result: PollResult
+}
+
+input PollUpdateManyInput {
+  create: [PollCreateInput!]
+  connect: [PollWhereUniqueInput!]
+  set: [PollWhereUniqueInput!]
+  disconnect: [PollWhereUniqueInput!]
+  delete: [PollWhereUniqueInput!]
+  update: [PollUpdateWithWhereUniqueNestedInput!]
+  updateMany: [PollUpdateManyWithWhereNestedInput!]
+  deleteMany: [PollScalarWhereInput!]
+  upsert: [PollUpsertWithWhereUniqueNestedInput!]
 }
 
 input PollUpdateManyMutationInput {
-  state: PollState
+  result: PollResult
+}
+
+input PollUpdateManyWithWhereNestedInput {
+  where: PollScalarWhereInput!
+  data: PollUpdateManyDataInput!
+}
+
+input PollUpdateWithWhereUniqueNestedInput {
+  where: PollWhereUniqueInput!
+  data: PollUpdateDataInput!
+}
+
+input PollUpsertWithWhereUniqueNestedInput {
+  where: PollWhereUniqueInput!
+  update: PollUpdateDataInput!
+  create: PollCreateInput!
 }
 
 input PollWhereInput {
@@ -722,20 +1126,28 @@ input PollWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
-  state: PollState
+  result: PollResult
 
   """All values that are not equal to given value."""
-  state_not: PollState
+  result_not: PollResult
 
   """All values that are contained in given list."""
-  state_in: [PollState!]
+  result_in: [PollResult!]
 
   """All values that are not contained in given list."""
-  state_not_in: [PollState!]
+  result_not_in: [PollResult!]
   away: TeamWhereInput
   home: TeamWhereInput
   group: GroupWhereInput
   country: CountryWhereInput
+  sport: SportWhereInput
+  state: PollStateWhereInput
+  users_every: UserWhereInput
+  users_some: UserWhereInput
+  users_none: UserWhereInput
+  usersPrediction_every: UserPollWhereInput
+  usersPrediction_some: UserPollWhereInput
+  usersPrediction_none: UserPollWhereInput
 }
 
 input PollWhereUniqueInput {
@@ -743,24 +1155,30 @@ input PollWhereUniqueInput {
 }
 
 type Query {
-  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
-  sports(where: SportWhereInput, orderBy: SportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Sport]!
-  polls(where: PollWhereInput, orderBy: PollOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Poll]!
+  userPolls(where: UserPollWhereInput, orderBy: UserPollOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [UserPoll]!
   countries(where: CountryWhereInput, orderBy: CountryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Country]!
-  groups(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Group]!
   teams(where: TeamWhereInput, orderBy: TeamOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Team]!
-  user(where: UserWhereUniqueInput!): User
-  sport(where: SportWhereUniqueInput!): Sport
-  poll(where: PollWhereUniqueInput!): Poll
+  groups(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Group]!
+  sports(where: SportWhereInput, orderBy: SportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Sport]!
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  pollStates(where: PollStateWhereInput, orderBy: PollStateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PollState]!
+  polls(where: PollWhereInput, orderBy: PollOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Poll]!
+  userPoll(where: UserPollWhereUniqueInput!): UserPoll
   country(where: CountryWhereUniqueInput!): Country
-  group(where: GroupWhereUniqueInput!): Group
   team(where: TeamWhereUniqueInput!): Team
-  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
-  sportsConnection(where: SportWhereInput, orderBy: SportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SportConnection!
-  pollsConnection(where: PollWhereInput, orderBy: PollOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PollConnection!
+  group(where: GroupWhereUniqueInput!): Group
+  sport(where: SportWhereUniqueInput!): Sport
+  user(where: UserWhereUniqueInput!): User
+  pollState(where: PollStateWhereUniqueInput!): PollState
+  poll(where: PollWhereUniqueInput!): Poll
+  userPollsConnection(where: UserPollWhereInput, orderBy: UserPollOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserPollConnection!
   countriesConnection(where: CountryWhereInput, orderBy: CountryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CountryConnection!
-  groupsConnection(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): GroupConnection!
   teamsConnection(where: TeamWhereInput, orderBy: TeamOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TeamConnection!
+  groupsConnection(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): GroupConnection!
+  sportsConnection(where: SportWhereInput, orderBy: SportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SportConnection!
+  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  pollStatesConnection(where: PollStateWhereInput, orderBy: PollStateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PollStateConnection!
+  pollsConnection(where: PollWhereInput, orderBy: PollOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PollConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -788,6 +1206,11 @@ type SportConnection {
 input SportCreateInput {
   name: String!
   icon: String!
+}
+
+input SportCreateOneInput {
+  create: SportCreateInput
+  connect: SportWhereUniqueInput
 }
 
 """An edge in a connection."""
@@ -857,6 +1280,11 @@ input SportSubscriptionWhereInput {
   node: SportWhereInput
 }
 
+input SportUpdateDataInput {
+  name: String
+  icon: String
+}
+
 input SportUpdateInput {
   name: String
   icon: String
@@ -865,6 +1293,18 @@ input SportUpdateInput {
 input SportUpdateManyMutationInput {
   name: String
   icon: String
+}
+
+input SportUpdateOneRequiredInput {
+  create: SportCreateInput
+  connect: SportWhereUniqueInput
+  update: SportUpdateDataInput
+  upsert: SportUpsertNestedInput
+}
+
+input SportUpsertNestedInput {
+  update: SportUpdateDataInput!
+  create: SportCreateInput!
 }
 
 input SportWhereInput {
@@ -1003,12 +1443,14 @@ input SportWhereUniqueInput {
 }
 
 type Subscription {
-  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
-  sport(where: SportSubscriptionWhereInput): SportSubscriptionPayload
-  poll(where: PollSubscriptionWhereInput): PollSubscriptionPayload
+  userPoll(where: UserPollSubscriptionWhereInput): UserPollSubscriptionPayload
   country(where: CountrySubscriptionWhereInput): CountrySubscriptionPayload
-  group(where: GroupSubscriptionWhereInput): GroupSubscriptionPayload
   team(where: TeamSubscriptionWhereInput): TeamSubscriptionPayload
+  group(where: GroupSubscriptionWhereInput): GroupSubscriptionPayload
+  sport(where: SportSubscriptionWhereInput): SportSubscriptionPayload
+  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+  pollState(where: PollStateSubscriptionWhereInput): PollStateSubscriptionPayload
+  poll(where: PollSubscriptionWhereInput): PollSubscriptionPayload
 }
 
 type Team implements Node {
@@ -1111,9 +1553,11 @@ input TeamUpdateManyMutationInput {
   name: String
 }
 
-input TeamUpdateOneRequiredInput {
+input TeamUpdateOneInput {
   create: TeamCreateInput
   connect: TeamWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
   update: TeamUpdateDataInput
   upsert: TeamUpsertNestedInput
 }
@@ -1222,6 +1666,9 @@ type User implements Node {
   id: ID!
   name: String!
   email: String!
+  password: String!
+  polls(where: PollWhereInput, orderBy: PollOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Poll!]
+  permissions: [Permission!]!
 }
 
 """A connection to a list of items."""
@@ -1237,6 +1684,23 @@ type UserConnection {
 input UserCreateInput {
   name: String!
   email: String!
+  password: String!
+  permissions: UserCreatepermissionsInput
+  polls: PollCreateManyInput
+}
+
+input UserCreateManyInput {
+  create: [UserCreateInput!]
+  connect: [UserWhereUniqueInput!]
+}
+
+input UserCreateOneInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreatepermissionsInput {
+  set: [Permission!]
 }
 
 """An edge in a connection."""
@@ -1255,16 +1719,454 @@ enum UserOrderByInput {
   name_DESC
   email_ASC
   email_DESC
+  password_ASC
+  password_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
   createdAt_DESC
 }
 
+type UserPoll implements Node {
+  id: ID!
+  user: User
+  predict: PollResult
+}
+
+"""A connection to a list of items."""
+type UserPollConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [UserPollEdge]!
+  aggregate: AggregateUserPoll!
+}
+
+input UserPollCreateInput {
+  predict: PollResult
+  user: UserCreateOneInput
+}
+
+input UserPollCreateManyInput {
+  create: [UserPollCreateInput!]
+  connect: [UserPollWhereUniqueInput!]
+}
+
+"""An edge in a connection."""
+type UserPollEdge {
+  """The item at the end of the edge."""
+  node: UserPoll!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum UserPollOrderByInput {
+  id_ASC
+  id_DESC
+  predict_ASC
+  predict_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type UserPollPreviousValues {
+  id: ID!
+  predict: PollResult
+}
+
+input UserPollScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [UserPollScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [UserPollScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [UserPollScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  predict: PollResult
+
+  """All values that are not equal to given value."""
+  predict_not: PollResult
+
+  """All values that are contained in given list."""
+  predict_in: [PollResult!]
+
+  """All values that are not contained in given list."""
+  predict_not_in: [PollResult!]
+}
+
+type UserPollSubscriptionPayload {
+  mutation: MutationType!
+  node: UserPoll
+  updatedFields: [String!]
+  previousValues: UserPollPreviousValues
+}
+
+input UserPollSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [UserPollSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [UserPollSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [UserPollSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: UserPollWhereInput
+}
+
+input UserPollUpdateDataInput {
+  predict: PollResult
+  user: UserUpdateOneInput
+}
+
+input UserPollUpdateInput {
+  predict: PollResult
+  user: UserUpdateOneInput
+}
+
+input UserPollUpdateManyDataInput {
+  predict: PollResult
+}
+
+input UserPollUpdateManyInput {
+  create: [UserPollCreateInput!]
+  connect: [UserPollWhereUniqueInput!]
+  set: [UserPollWhereUniqueInput!]
+  disconnect: [UserPollWhereUniqueInput!]
+  delete: [UserPollWhereUniqueInput!]
+  update: [UserPollUpdateWithWhereUniqueNestedInput!]
+  updateMany: [UserPollUpdateManyWithWhereNestedInput!]
+  deleteMany: [UserPollScalarWhereInput!]
+  upsert: [UserPollUpsertWithWhereUniqueNestedInput!]
+}
+
+input UserPollUpdateManyMutationInput {
+  predict: PollResult
+}
+
+input UserPollUpdateManyWithWhereNestedInput {
+  where: UserPollScalarWhereInput!
+  data: UserPollUpdateManyDataInput!
+}
+
+input UserPollUpdateWithWhereUniqueNestedInput {
+  where: UserPollWhereUniqueInput!
+  data: UserPollUpdateDataInput!
+}
+
+input UserPollUpsertWithWhereUniqueNestedInput {
+  where: UserPollWhereUniqueInput!
+  update: UserPollUpdateDataInput!
+  create: UserPollCreateInput!
+}
+
+input UserPollWhereInput {
+  """Logical AND on all given filters."""
+  AND: [UserPollWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [UserPollWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [UserPollWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  predict: PollResult
+
+  """All values that are not equal to given value."""
+  predict_not: PollResult
+
+  """All values that are contained in given list."""
+  predict_in: [PollResult!]
+
+  """All values that are not contained in given list."""
+  predict_not_in: [PollResult!]
+  user: UserWhereInput
+}
+
+input UserPollWhereUniqueInput {
+  id: ID
+}
+
 type UserPreviousValues {
   id: ID!
   name: String!
   email: String!
+  password: String!
+  permissions: [Permission!]!
+}
+
+input UserScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [UserScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [UserScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [UserScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  email: String
+
+  """All values that are not equal to given value."""
+  email_not: String
+
+  """All values that are contained in given list."""
+  email_in: [String!]
+
+  """All values that are not contained in given list."""
+  email_not_in: [String!]
+
+  """All values less than the given value."""
+  email_lt: String
+
+  """All values less than or equal the given value."""
+  email_lte: String
+
+  """All values greater than the given value."""
+  email_gt: String
+
+  """All values greater than or equal the given value."""
+  email_gte: String
+
+  """All values containing the given string."""
+  email_contains: String
+
+  """All values not containing the given string."""
+  email_not_contains: String
+
+  """All values starting with the given string."""
+  email_starts_with: String
+
+  """All values not starting with the given string."""
+  email_not_starts_with: String
+
+  """All values ending with the given string."""
+  email_ends_with: String
+
+  """All values not ending with the given string."""
+  email_not_ends_with: String
+  password: String
+
+  """All values that are not equal to given value."""
+  password_not: String
+
+  """All values that are contained in given list."""
+  password_in: [String!]
+
+  """All values that are not contained in given list."""
+  password_not_in: [String!]
+
+  """All values less than the given value."""
+  password_lt: String
+
+  """All values less than or equal the given value."""
+  password_lte: String
+
+  """All values greater than the given value."""
+  password_gt: String
+
+  """All values greater than or equal the given value."""
+  password_gte: String
+
+  """All values containing the given string."""
+  password_contains: String
+
+  """All values not containing the given string."""
+  password_not_contains: String
+
+  """All values starting with the given string."""
+  password_starts_with: String
+
+  """All values not starting with the given string."""
+  password_not_starts_with: String
+
+  """All values ending with the given string."""
+  password_ends_with: String
+
+  """All values not ending with the given string."""
+  password_not_ends_with: String
 }
 
 type UserSubscriptionPayload {
@@ -1306,14 +2208,80 @@ input UserSubscriptionWhereInput {
   node: UserWhereInput
 }
 
+input UserUpdateDataInput {
+  name: String
+  email: String
+  password: String
+  permissions: UserUpdatepermissionsInput
+  polls: PollUpdateManyInput
+}
+
 input UserUpdateInput {
   name: String
   email: String
+  password: String
+  permissions: UserUpdatepermissionsInput
+  polls: PollUpdateManyInput
+}
+
+input UserUpdateManyDataInput {
+  name: String
+  email: String
+  password: String
+  permissions: UserUpdatepermissionsInput
+}
+
+input UserUpdateManyInput {
+  create: [UserCreateInput!]
+  connect: [UserWhereUniqueInput!]
+  set: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  delete: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueNestedInput!]
+  updateMany: [UserUpdateManyWithWhereNestedInput!]
+  deleteMany: [UserScalarWhereInput!]
+  upsert: [UserUpsertWithWhereUniqueNestedInput!]
 }
 
 input UserUpdateManyMutationInput {
   name: String
   email: String
+  password: String
+  permissions: UserUpdatepermissionsInput
+}
+
+input UserUpdateManyWithWhereNestedInput {
+  where: UserScalarWhereInput!
+  data: UserUpdateManyDataInput!
+}
+
+input UserUpdateOneInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: UserUpdateDataInput
+  upsert: UserUpsertNestedInput
+}
+
+input UserUpdatepermissionsInput {
+  set: [Permission!]
+}
+
+input UserUpdateWithWhereUniqueNestedInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateDataInput!
+}
+
+input UserUpsertNestedInput {
+  update: UserUpdateDataInput!
+  create: UserCreateInput!
+}
+
+input UserUpsertWithWhereUniqueNestedInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateDataInput!
+  create: UserCreateInput!
 }
 
 input UserWhereInput {
@@ -1445,8 +2413,52 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   email_not_ends_with: String
+  password: String
+
+  """All values that are not equal to given value."""
+  password_not: String
+
+  """All values that are contained in given list."""
+  password_in: [String!]
+
+  """All values that are not contained in given list."""
+  password_not_in: [String!]
+
+  """All values less than the given value."""
+  password_lt: String
+
+  """All values less than or equal the given value."""
+  password_lte: String
+
+  """All values greater than the given value."""
+  password_gt: String
+
+  """All values greater than or equal the given value."""
+  password_gte: String
+
+  """All values containing the given string."""
+  password_contains: String
+
+  """All values not containing the given string."""
+  password_not_contains: String
+
+  """All values starting with the given string."""
+  password_starts_with: String
+
+  """All values not starting with the given string."""
+  password_not_starts_with: String
+
+  """All values ending with the given string."""
+  password_ends_with: String
+
+  """All values not ending with the given string."""
+  password_not_ends_with: String
+  polls_every: PollWhereInput
+  polls_some: PollWhereInput
+  polls_none: PollWhereInput
 }
 
 input UserWhereUniqueInput {
   id: ID
+  email: String
 }

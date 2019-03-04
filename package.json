@@ -9,7 +9,7 @@
     "test": "jest",
     "playground": "graphql playground --dotenv variables.env",
     "dev": "npm-run-all --parallel debug playground",
-    "deploy": "prisma deploy --env-file variables.env"
+    "deploy": "prisma deploy  --env-file variables.env"
   },
   "repository": {
     "type": "git",

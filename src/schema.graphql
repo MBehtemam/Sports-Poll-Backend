@@ -1,12 +1,35 @@
 # import * from './generated/prisma.graphql'
+type SuccessMessage {
+  message: String
+}
 type Mutation {
   createCountry(name: String, flag: String): Country!
   createGroup(name: String): Group!
   createSport(name: String, icon: String): Sport!
+  createTeam(name: String): Team!
+  createPollState(name: String, value: String): PollState!
+  createPoll(
+    away: String
+    home: String
+    group: String
+    country: String
+    state: String
+    sport: String
+  ): Poll!
+  singup(email: String!, password: String!, name: String!): User!
+  singin(email: String!, password: String!): User!
+  singout: SuccessMessage
+  pollPerdiction(pollId: ID!, perdiction: String!): SuccessMessage
 }
 
 type Query {
   countries: [Country]
   groups: [Group]
   sports: [Sport]
+  teams: [Team]
+  pollStates: [PollState]
+  polls: [Poll]
+  users: [User]
+  user: User
+  randomPolls: [Poll]
 }
