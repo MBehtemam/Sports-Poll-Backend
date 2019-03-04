@@ -85,16 +85,36 @@ const Mutation = {
     ctx.response.clearCookie("token");
     return { message: "Successfully Logout" };
   },
-  async pollPerdiction(parent, args, ctx, info) {
-    // if (!ctx.request.user) {
-    //   return null;
-    // }
-    //find all poll and users of poll
-    console.log(args);
-    const poll = await ctx.db.query.poll({ where: { id: args.pollId } }, info);
-    console.log(poll);
-    //const updatePoll = ctx.db.mutation()
-    return [];
+  async pollPrediction(parent, args, ctx, info) {
+    if (!ctx.request.user) {
+      return null;
+    }
+    let predict = "";
+    if (args.predict === "home") {
+      predict = "HOME_WIN";
+    } else if (predict === "away") {
+      predict = "AWAY_WIN";
+    } else {
+      predict = "DRAW";
+    }
+    const poll = await ctx.db.mutation.updatePoll(
+      {
+        where: { id: args.pollId },
+        data: {
+          users: { connect: { id: ctx.request.user.id } },
+          usersPrediction: {
+            create: {
+              predict,
+              user: {
+                connect: { id: ctx.request.user.id }
+              }
+            }
+          }
+        }
+      },
+      info
+    );
+    return poll;
   }
 };
 module.exports = Mutation;

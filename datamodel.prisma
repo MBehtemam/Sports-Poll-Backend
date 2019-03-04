@@ -3,7 +3,6 @@ type User {
   name: String!
   email: String! @unique
   password: String!
-  polls: [Poll] @relation(name: "Poll")
   permissions: [Permission]
 }
 type Country {

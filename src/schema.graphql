@@ -19,7 +19,7 @@ type Mutation {
   singup(email: String!, password: String!, name: String!): User!
   singin(email: String!, password: String!): User!
   singout: SuccessMessage
-  pollPerdiction(pollId: ID!, perdiction: String!): SuccessMessage
+  pollPrediction(pollId: String!, predict: String!): SuccessMessage
 }
 
 type Query {
@@ -32,4 +32,5 @@ type Query {
   users: [User]
   user: User
   randomPolls: [Poll]
+  poll: Poll!
 }

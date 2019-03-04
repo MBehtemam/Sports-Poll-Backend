@@ -1,10 +1,6 @@
 const { forwardTo } = require("prisma-binding");
 const Query = {
   countries: forwardTo("db"),
-  //   async countries(parent, args, ctx, info) {
-  //     const r = await ctx.db.query.countries();
-  //     return r;
-  //   },
   async groups(parent, args, ctx, info) {
     const r = await ctx.db.query.groups();
     return r;
@@ -13,6 +9,9 @@ const Query = {
   teams: forwardTo("db"),
   pollStates: forwardTo("db"),
   polls: forwardTo("db"),
+  poll: (parent, args, ctx, info) => {
+    return ctx.db.query.poll({ where: { id: args.id } }, info);
+  },
   user: (parent, args, ctx, info) => {
     if (!ctx.request.userId) {
       return null;
@@ -26,14 +25,14 @@ const Query = {
     const polls = await ctx.db.query.polls(
       {
         where: {
-          users_none: {
-            id_not_in: ["cjss49n7w5qqt0b873yw6vv5f"]
+          users_every: {
+            id_not_in: [ctx.request.user.id]
           },
           state: {
-            name: "STARTED"
+            name_in: ["STARTED"]
           },
           sport: {
-            id: sport.id
+            id_in: [sport.id]
           }
         }
       },
