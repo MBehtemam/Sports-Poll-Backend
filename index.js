@@ -28,13 +28,10 @@ server.express.use(async (req, res, next) => {
 });
 //todo populate
 server.start(
-  {
-//     cors: {
-//     credentials: true,
-//       origin:"*"
-//     //origin: process.env.FRONTEND_URL
-//       //origin: "https://sports-poll-frontend.herokuapp.com/"
-//     }
+  {cors: {
+      credentials: true,
+      origin: process.env.FRONTEND_URL,
+    },
   },
   deets => {
     console.log(`Server is running on http:localhost:/${deets.port}`);
