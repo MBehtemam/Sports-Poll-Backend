@@ -20,6 +20,7 @@ type Mutation {
   singin(email: String!, password: String!): User!
   singout: SuccessMessage
   pollPrediction(pollId: String!, predict: String!): SuccessMessage
+  updatePermissions(permissions: [Permission], userId: ID!): User
 }
 
 type Query {

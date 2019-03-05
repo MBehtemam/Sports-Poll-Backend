@@ -1,7 +1,11 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const hasPermission = require("../utils/hasPermission");
+const mustLoggedIn = require("../utils/mustLoggedIn");
 const Mutation = {
   async createCountry(parent, args, ctx, info) {
+    mustLoggedIn(ctx);
+    hasPermission(user, ["ADMIN"]);
     const country = await ctx.db.mutation.createCountry(
       { data: { ...args } },
       info
@@ -9,6 +13,8 @@ const Mutation = {
     return country;
   },
   async createGroup(parent, args, ctx, info) {
+    mustLoggedIn(ctx);
+    hasPermission(user, ["ADMIN"]);
     const group = await ctx.db.mutation.createGroup(
       { data: { ...args } },
       info
@@ -16,6 +22,8 @@ const Mutation = {
     return group;
   },
   async createSport(parent, args, ctx, info) {
+    mustLoggedIn(ctx);
+    hasPermission(user, ["ADMIN"]);
     const sport = await ctx.db.mutation.createSport(
       { data: { ...args } },
       info
@@ -23,10 +31,14 @@ const Mutation = {
     return sport;
   },
   async createTeam(parent, args, ctx, info) {
+    mustLoggedIn(ctx);
+    hasPermission(user, ["ADMIN"]);
     const team = await ctx.db.mutation.createTeam({ data: { ...args } }, info);
     return team;
   },
   async createPollState(parent, args, ctx, info) {
+    mustLoggedIn(ctx);
+    hasPermission(user, ["ADMIN"]);
     const pollState = await ctx.db.mutation.createPollState(
       { data: { ...args } },
       info
@@ -34,6 +46,8 @@ const Mutation = {
     return pollState;
   },
   async createPoll(parent, args, ctx, info) {
+    mustLoggedIn(ctx);
+    hasPermission(user, ["ADMIN"]);
     const { country, away, home, group, state, sport } = args;
     const poll = await ctx.db.mutation.createPoll(
       {
@@ -86,9 +100,7 @@ const Mutation = {
     return { message: "Successfully Logout" };
   },
   async pollPrediction(parent, args, ctx, info) {
-    if (!ctx.request.user) {
-      return null;
-    }
+    mustLoggedIn(ctx);
     let predict = "";
     if (args.predict === "home") {
       predict = "HOME_WIN";
@@ -115,6 +127,16 @@ const Mutation = {
       info
     );
     return poll;
+  },
+  async updatePermissions(parent, args, ctx, info) {
+    mustLoggedIn(ctx);
+    hasPermission(ctx.request.user, ["ADMIN"]);
+    const { userId, permissions } = args;
+    const user = ctx.db.mutation.updateUser(
+      { where: { id: userId }, data: { permissions: { set: permissions } } },
+      info
+    );
+    return user;
   }
 };
 module.exports = Mutation;
