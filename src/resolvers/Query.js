@@ -20,7 +20,15 @@ const Query = {
     }
   },
   randomPolls: async (parent, args, ctx, info) => {
-    const sports = await ctx.db.query.sports();
+    const sportsQuery = await ctx.db.query.polls(
+      { where: { state: { name_in: ["STARTED"] } } },
+      `{id sport{id}}`
+    );
+    const sports = sportsQuery
+      .map(item => item.sport.id)
+      .filter((id, index, arr) => arr.indexOf(id) == index);
+
+    // const sports = await ctx.db.query.sports(info);
     const sport = sports[Math.floor(Math.random() * sports.length)];
     const polls = await ctx.db.query.polls(
       {
@@ -32,7 +40,7 @@ const Query = {
             name_in: ["STARTED"]
           },
           sport: {
-            id_in: [sport.id]
+            id_in: [sport]
           }
         }
       },

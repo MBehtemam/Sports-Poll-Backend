@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/mohammad-bagher-ehtemam-c9a645/Sports-Poll-Backend/dev
-# timestamp: Mon Mar 04 2019 07:05:33 GMT+0330 (Iran Standard Time)
+# timestamp: Mon Mar 04 2019 22:08:57 GMT+0330 (Iran Standard Time)
 
 type AggregateCountry {
   count: Int!
@@ -507,6 +507,7 @@ Long can represent values between -(2^63) and 2^63 - 1.
 scalar Long
 
 type Mutation {
+  createPoll(data: PollCreateInput!): Poll!
   createUserPoll(data: UserPollCreateInput!): UserPoll!
   createCountry(data: CountryCreateInput!): Country!
   createTeam(data: TeamCreateInput!): Team!
@@ -514,7 +515,7 @@ type Mutation {
   createSport(data: SportCreateInput!): Sport!
   createUser(data: UserCreateInput!): User!
   createPollState(data: PollStateCreateInput!): PollState!
-  createPoll(data: PollCreateInput!): Poll!
+  updatePoll(data: PollUpdateInput!, where: PollWhereUniqueInput!): Poll
   updateUserPoll(data: UserPollUpdateInput!, where: UserPollWhereUniqueInput!): UserPoll
   updateCountry(data: CountryUpdateInput!, where: CountryWhereUniqueInput!): Country
   updateTeam(data: TeamUpdateInput!, where: TeamWhereUniqueInput!): Team
@@ -522,7 +523,7 @@ type Mutation {
   updateSport(data: SportUpdateInput!, where: SportWhereUniqueInput!): Sport
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updatePollState(data: PollStateUpdateInput!, where: PollStateWhereUniqueInput!): PollState
-  updatePoll(data: PollUpdateInput!, where: PollWhereUniqueInput!): Poll
+  deletePoll(where: PollWhereUniqueInput!): Poll
   deleteUserPoll(where: UserPollWhereUniqueInput!): UserPoll
   deleteCountry(where: CountryWhereUniqueInput!): Country
   deleteTeam(where: TeamWhereUniqueInput!): Team
@@ -530,7 +531,7 @@ type Mutation {
   deleteSport(where: SportWhereUniqueInput!): Sport
   deleteUser(where: UserWhereUniqueInput!): User
   deletePollState(where: PollStateWhereUniqueInput!): PollState
-  deletePoll(where: PollWhereUniqueInput!): Poll
+  upsertPoll(where: PollWhereUniqueInput!, create: PollCreateInput!, update: PollUpdateInput!): Poll!
   upsertUserPoll(where: UserPollWhereUniqueInput!, create: UserPollCreateInput!, update: UserPollUpdateInput!): UserPoll!
   upsertCountry(where: CountryWhereUniqueInput!, create: CountryCreateInput!, update: CountryUpdateInput!): Country!
   upsertTeam(where: TeamWhereUniqueInput!, create: TeamCreateInput!, update: TeamUpdateInput!): Team!
@@ -538,7 +539,7 @@ type Mutation {
   upsertSport(where: SportWhereUniqueInput!, create: SportCreateInput!, update: SportUpdateInput!): Sport!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   upsertPollState(where: PollStateWhereUniqueInput!, create: PollStateCreateInput!, update: PollStateUpdateInput!): PollState!
-  upsertPoll(where: PollWhereUniqueInput!, create: PollCreateInput!, update: PollUpdateInput!): Poll!
+  updateManyPolls(data: PollUpdateManyMutationInput!, where: PollWhereInput): BatchPayload!
   updateManyUserPolls(data: UserPollUpdateManyMutationInput!, where: UserPollWhereInput): BatchPayload!
   updateManyCountries(data: CountryUpdateManyMutationInput!, where: CountryWhereInput): BatchPayload!
   updateManyTeams(data: TeamUpdateManyMutationInput!, where: TeamWhereInput): BatchPayload!
@@ -546,7 +547,7 @@ type Mutation {
   updateManySports(data: SportUpdateManyMutationInput!, where: SportWhereInput): BatchPayload!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
   updateManyPollStates(data: PollStateUpdateManyMutationInput!, where: PollStateWhereInput): BatchPayload!
-  updateManyPolls(data: PollUpdateManyMutationInput!, where: PollWhereInput): BatchPayload!
+  deleteManyPolls(where: PollWhereInput): BatchPayload!
   deleteManyUserPolls(where: UserPollWhereInput): BatchPayload!
   deleteManyCountries(where: CountryWhereInput): BatchPayload!
   deleteManyTeams(where: TeamWhereInput): BatchPayload!
@@ -554,7 +555,6 @@ type Mutation {
   deleteManySports(where: SportWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
   deleteManyPollStates(where: PollStateWhereInput): BatchPayload!
-  deleteManyPolls(where: PollWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -624,11 +624,6 @@ input PollCreateInput {
   usersPrediction: UserPollCreateManyInput
 }
 
-input PollCreateManyInput {
-  create: [PollCreateInput!]
-  connect: [PollWhereUniqueInput!]
-}
-
 """An edge in a connection."""
 type PollEdge {
   """The item at the end of the edge."""
@@ -658,67 +653,6 @@ enum PollResult {
   HOME_WIN
   AWAY_WIN
   DRAW
-}
-
-input PollScalarWhereInput {
-  """Logical AND on all given filters."""
-  AND: [PollScalarWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [PollScalarWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [PollScalarWhereInput!]
-  id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  result: PollResult
-
-  """All values that are not equal to given value."""
-  result_not: PollResult
-
-  """All values that are contained in given list."""
-  result_in: [PollResult!]
-
-  """All values that are not contained in given list."""
-  result_not_in: [PollResult!]
 }
 
 type PollState implements Node {
@@ -1017,18 +951,6 @@ input PollSubscriptionWhereInput {
   node: PollWhereInput
 }
 
-input PollUpdateDataInput {
-  result: PollResult
-  away: TeamUpdateOneInput
-  home: TeamUpdateOneInput
-  group: GroupUpdateOneRequiredInput
-  country: CountryUpdateOneRequiredInput
-  sport: SportUpdateOneRequiredInput
-  state: PollStateUpdateOneRequiredInput
-  users: UserUpdateManyInput
-  usersPrediction: UserPollUpdateManyInput
-}
-
 input PollUpdateInput {
   result: PollResult
   away: TeamUpdateOneInput
@@ -1041,40 +963,8 @@ input PollUpdateInput {
   usersPrediction: UserPollUpdateManyInput
 }
 
-input PollUpdateManyDataInput {
-  result: PollResult
-}
-
-input PollUpdateManyInput {
-  create: [PollCreateInput!]
-  connect: [PollWhereUniqueInput!]
-  set: [PollWhereUniqueInput!]
-  disconnect: [PollWhereUniqueInput!]
-  delete: [PollWhereUniqueInput!]
-  update: [PollUpdateWithWhereUniqueNestedInput!]
-  updateMany: [PollUpdateManyWithWhereNestedInput!]
-  deleteMany: [PollScalarWhereInput!]
-  upsert: [PollUpsertWithWhereUniqueNestedInput!]
-}
-
 input PollUpdateManyMutationInput {
   result: PollResult
-}
-
-input PollUpdateManyWithWhereNestedInput {
-  where: PollScalarWhereInput!
-  data: PollUpdateManyDataInput!
-}
-
-input PollUpdateWithWhereUniqueNestedInput {
-  where: PollWhereUniqueInput!
-  data: PollUpdateDataInput!
-}
-
-input PollUpsertWithWhereUniqueNestedInput {
-  where: PollWhereUniqueInput!
-  update: PollUpdateDataInput!
-  create: PollCreateInput!
 }
 
 input PollWhereInput {
@@ -1155,6 +1045,7 @@ input PollWhereUniqueInput {
 }
 
 type Query {
+  polls(where: PollWhereInput, orderBy: PollOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Poll]!
   userPolls(where: UserPollWhereInput, orderBy: UserPollOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [UserPoll]!
   countries(where: CountryWhereInput, orderBy: CountryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Country]!
   teams(where: TeamWhereInput, orderBy: TeamOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Team]!
@@ -1162,7 +1053,7 @@ type Query {
   sports(where: SportWhereInput, orderBy: SportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Sport]!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   pollStates(where: PollStateWhereInput, orderBy: PollStateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PollState]!
-  polls(where: PollWhereInput, orderBy: PollOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Poll]!
+  poll(where: PollWhereUniqueInput!): Poll
   userPoll(where: UserPollWhereUniqueInput!): UserPoll
   country(where: CountryWhereUniqueInput!): Country
   team(where: TeamWhereUniqueInput!): Team
@@ -1170,7 +1061,7 @@ type Query {
   sport(where: SportWhereUniqueInput!): Sport
   user(where: UserWhereUniqueInput!): User
   pollState(where: PollStateWhereUniqueInput!): PollState
-  poll(where: PollWhereUniqueInput!): Poll
+  pollsConnection(where: PollWhereInput, orderBy: PollOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PollConnection!
   userPollsConnection(where: UserPollWhereInput, orderBy: UserPollOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserPollConnection!
   countriesConnection(where: CountryWhereInput, orderBy: CountryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CountryConnection!
   teamsConnection(where: TeamWhereInput, orderBy: TeamOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TeamConnection!
@@ -1178,7 +1069,6 @@ type Query {
   sportsConnection(where: SportWhereInput, orderBy: SportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SportConnection!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   pollStatesConnection(where: PollStateWhereInput, orderBy: PollStateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PollStateConnection!
-  pollsConnection(where: PollWhereInput, orderBy: PollOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PollConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -1443,6 +1333,7 @@ input SportWhereUniqueInput {
 }
 
 type Subscription {
+  poll(where: PollSubscriptionWhereInput): PollSubscriptionPayload
   userPoll(where: UserPollSubscriptionWhereInput): UserPollSubscriptionPayload
   country(where: CountrySubscriptionWhereInput): CountrySubscriptionPayload
   team(where: TeamSubscriptionWhereInput): TeamSubscriptionPayload
@@ -1450,7 +1341,6 @@ type Subscription {
   sport(where: SportSubscriptionWhereInput): SportSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
   pollState(where: PollStateSubscriptionWhereInput): PollStateSubscriptionPayload
-  poll(where: PollSubscriptionWhereInput): PollSubscriptionPayload
 }
 
 type Team implements Node {
@@ -1667,7 +1557,6 @@ type User implements Node {
   name: String!
   email: String!
   password: String!
-  polls(where: PollWhereInput, orderBy: PollOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Poll!]
   permissions: [Permission!]!
 }
 
@@ -1686,7 +1575,6 @@ input UserCreateInput {
   email: String!
   password: String!
   permissions: UserCreatepermissionsInput
-  polls: PollCreateManyInput
 }
 
 input UserCreateManyInput {
@@ -2213,7 +2101,6 @@ input UserUpdateDataInput {
   email: String
   password: String
   permissions: UserUpdatepermissionsInput
-  polls: PollUpdateManyInput
 }
 
 input UserUpdateInput {
@@ -2221,7 +2108,6 @@ input UserUpdateInput {
   email: String
   password: String
   permissions: UserUpdatepermissionsInput
-  polls: PollUpdateManyInput
 }
 
 input UserUpdateManyDataInput {
@@ -2453,9 +2339,6 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   password_not_ends_with: String
-  polls_every: PollWhereInput
-  polls_some: PollWhereInput
-  polls_none: PollWhereInput
 }
 
 input UserWhereUniqueInput {
