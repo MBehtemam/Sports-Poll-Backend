@@ -31,7 +31,7 @@ server.start(
   {
     cors: {
     credentials: true,
-      origin:false
+      origin:"*"
     //origin: process.env.FRONTEND_URL
       //origin: "https://sports-poll-frontend.herokuapp.com/"
     }
