@@ -1,4 +1,5 @@
-endpoint: ${env:PRISMA_ENDPOINT}
+#endpoint: ${env:PRISMA_ENDPOINT}
+endpoint: https://sportspoll-c04c1cf5d2.herokuapp.com/Sports-Poll-Backend-Prod/prod
 datamodel: datamodel.prisma
 # secret:${env:PRISMA_SECRET}
 hooks:
