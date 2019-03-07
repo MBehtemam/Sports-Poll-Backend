@@ -21,6 +21,7 @@ type Mutation {
   singout: SuccessMessage
   pollPrediction(pollId: String!, predict: String!): SuccessMessage
   updatePermissions(permissions: [Permission], userId: ID!): User
+  deleteUser(userId: String): User
 }
 
 type Query {

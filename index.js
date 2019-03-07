@@ -30,7 +30,7 @@ server.express.use(async (req, res, next) => {
 server.start(
   {cors: {
       credentials: true,
-      origin:[']https://sports-poll-frontend.herokuapp.com','http://localhost:7777'],
+      origin:['https://sports-poll-frontend.herokuapp.com','http://localhost:7777'],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
     preflightContinue:true
     },

@@ -35,8 +35,9 @@ enum PollResult {
 }
 type UserPoll {
   id: ID! @unique
-  user: User
-  predict: PollResult
+  user: User!
+  predict: PollResult!
+  poll: Poll! @relation(name: "Poll")
 }
 type Poll {
   id: ID! @unique
