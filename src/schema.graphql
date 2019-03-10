@@ -22,7 +22,7 @@ type Mutation {
   pollPrediction(pollId: String!, predict: String!): SuccessMessage
   updatePermissions(permissions: [Permission], userId: ID!): User
   deleteUser(userId: String): User
-  updatePoll(pollId: ID!, state: PollState!): Poll!
+  updatePoll(pollId: ID!, stateId: ID!): Poll!
 }
 
 type Query {
