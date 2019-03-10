@@ -1,4 +1,7 @@
 const { forwardTo } = require("prisma-binding");
+const hasPermission = require("../utils/hasPermission");
+const mustLoggedIn = require("../utils/mustLoggedIn");
+
 const Query = {
   countries: forwardTo("db"),
   async groups(parent, args, ctx, info) {
@@ -18,6 +21,9 @@ const Query = {
     } else {
       return ctx.db.query.user({ where: { id: ctx.request.userId } }, info);
     }
+  },
+  users: async (parent, args, ctx, info) => {
+    return await ctx.db.query.users({}, info);
   },
   randomPolls: async (parent, args, ctx, info) => {
     const sportsQuery = await ctx.db.query.polls(
