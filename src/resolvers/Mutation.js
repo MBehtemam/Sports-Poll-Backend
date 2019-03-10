@@ -137,6 +137,15 @@ const Mutation = {
       info
     );
     return user;
+  },
+  async updatePoll(parent, args, ctx, info) {
+    mustLoggedIn(ctx);
+    hasPermission(ctx.request.user, ["ADMIN"]);
+    const { pollId, stateId } = args;
+    return ctx.db.mutation.updatePoll(
+      { where: { id: pollId }, data: { state: { connect: { id: stateId } } } },
+      info
+    );
   }
 };
 module.exports = Mutation;
