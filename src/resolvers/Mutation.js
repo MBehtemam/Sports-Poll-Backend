@@ -5,7 +5,7 @@ const mustLoggedIn = require("../utils/mustLoggedIn");
 const Mutation = {
   async createCountry(parent, args, ctx, info) {
     mustLoggedIn(ctx);
-    hasPermission(user, ["ADMIN"]);
+    hasPermission(ctx.request.user, ["ADMIN"]);
     const country = await ctx.db.mutation.createCountry(
       { data: { ...args } },
       info
@@ -14,7 +14,7 @@ const Mutation = {
   },
   async createGroup(parent, args, ctx, info) {
     mustLoggedIn(ctx);
-    hasPermission(user, ["ADMIN"]);
+    hasPermission(ctx.request.user, ["ADMIN"]);
     const group = await ctx.db.mutation.createGroup(
       { data: { ...args } },
       info
@@ -23,7 +23,7 @@ const Mutation = {
   },
   async createSport(parent, args, ctx, info) {
     mustLoggedIn(ctx);
-    hasPermission(user, ["ADMIN"]);
+    hasPermission(ctx.request.user, ["ADMIN"]);
     const sport = await ctx.db.mutation.createSport(
       { data: { ...args } },
       info
@@ -32,13 +32,13 @@ const Mutation = {
   },
   async createTeam(parent, args, ctx, info) {
     mustLoggedIn(ctx);
-    hasPermission(user, ["ADMIN"]);
+    hasPermission(ctx.request.user, ["ADMIN"]);
     const team = await ctx.db.mutation.createTeam({ data: { ...args } }, info);
     return team;
   },
   async createPollState(parent, args, ctx, info) {
     mustLoggedIn(ctx);
-    hasPermission(user, ["ADMIN"]);
+    hasPermission(ctx.request.user, ["ADMIN"]);
     const pollState = await ctx.db.mutation.createPollState(
       { data: { ...args } },
       info
@@ -47,7 +47,7 @@ const Mutation = {
   },
   async createPoll(parent, args, ctx, info) {
     mustLoggedIn(ctx);
-    hasPermission(user, ["ADMIN"]);
+    hasPermission(ctx.request.user, ["ADMIN"]);
     const { country, away, home, group, state, sport } = args;
     const poll = await ctx.db.mutation.createPoll(
       {

@@ -27,26 +27,32 @@ const Query = {
   },
   randomPolls: async (parent, args, ctx, info) => {
     const sportsQuery = await ctx.db.query.polls(
-      { where: { state: { name_in: ["STARTED"] } } },
+      {
+        where: {
+          users_none: {
+            id_in: [ctx.request.user.id]
+          },
+          state: { name: "STARTED" }
+        }
+      },
       `{id sport{id}}`
     );
     const sports = sportsQuery
       .map(item => item.sport.id)
       .filter((id, index, arr) => arr.indexOf(id) == index);
-
     // const sports = await ctx.db.query.sports(info);
     const sport = sports[Math.floor(Math.random() * sports.length)];
     const polls = await ctx.db.query.polls(
       {
         where: {
-          users_every: {
-            id_not_in: [ctx.request.user.id]
+          users_none: {
+            id_in: [ctx.request.user.id]
           },
           state: {
             name_in: ["STARTED"]
           },
           sport: {
-            id_in: [sport]
+            id: sport
           }
         }
       },
