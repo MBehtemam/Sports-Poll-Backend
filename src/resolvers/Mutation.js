@@ -62,6 +62,12 @@ const Mutation = {
       },
       info
     );
+    const { id } = poll;
+    //when ever we create a poll we create an vote table
+    const createVote = await ctx.db.mutation.createVote(
+      { data: { poll: { connect: { id } } } },
+      `{id}`
+    );
     return poll;
   },
   async singup(parent, args, ctx, info) {
@@ -109,6 +115,27 @@ const Mutation = {
     } else {
       predict = "DRAW";
     }
+
+    //retriving all votes of poll
+    const votesQuery = await ctx.db.query.poll(
+      { where: { id: args.pollId } },
+      `{ id
+        votes:{votes}
+       }`
+    );
+    const votes = votesQuery.votes;
+    //push current vote
+    votes.push(predict);
+    //adding vote set to the votes category
+    const v = await ctx.db.mutation.updateManyVotes(
+      {
+        where: { poll: { id_in: [args.pollId] } },
+        data: {
+          votes: { set: votes }
+        }
+      },
+      `{count}`
+    );
     const poll = await ctx.db.mutation.updatePoll(
       {
         where: { id: args.pollId },

@@ -50,8 +50,14 @@ type Poll {
   state: PollState! @relation(name: "PollState")
   users: [User] @relation(name: "Users")
   usersPrediction: [UserPoll] @relation(name: "UserPoll")
+  votes: [Vote] @relation(name: "Votes")
 }
 enum Permission {
   ADMIN
   USER
+}
+type Vote {
+  id: ID! @unique
+  poll: Poll! @unique @relation(name: "Polls")
+  votes: [PollResult]
 }
