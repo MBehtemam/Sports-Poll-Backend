@@ -59,6 +59,36 @@ const Query = {
       info
     );
     return polls;
+  },
+  async mostUserSportsPoll(parent, args, ctx, info) {
+    const polls = await ctx.db.query.polls(
+      {
+        where: {
+          users_some: {
+            id_in: ["cjsup33f8ncat0b5090ow5tzd"]
+          }
+        }
+      },
+      `{id sport { id name }}`
+    );
+    const result = {
+      title: "Most Sports User Like",
+      results: []
+    };
+    const sports = {};
+    result.results = polls.map(p => p.sport.name).forEach(s => {
+      if (sports[s]) {
+        sports[s]++;
+      } else {
+        sports[s] = 1;
+      }
+    });
+    result.results = Object.keys(sports).map(key => ({
+      label: key,
+      count: sports[key]
+    }));
+    console.log(result);
+    return result;
   }
 };
 

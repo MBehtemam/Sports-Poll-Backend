@@ -2,6 +2,15 @@
 type SuccessMessage {
   message: String
 }
+type ChartCategory {
+  label: String!
+  count: Int!
+}
+type ChartResult {
+  id: ID!
+  title: String!
+  results: [ChartCategory]!
+}
 type Mutation {
   createCountry(name: String, flag: String): Country!
   createGroup(name: String): Group!
@@ -36,4 +45,5 @@ type Query {
   user: User
   randomPolls: [Poll]
   poll(id: ID!): Poll!
+  mostUserSportsPoll: ChartResult!
 }
