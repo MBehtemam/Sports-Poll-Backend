@@ -60,12 +60,12 @@ const Query = {
     );
     return polls;
   },
-  async mostUserSportsPoll(parent, args, ctx, info) {
+  async sportsPollCount(parent, args, ctx, info) {
     const polls = await ctx.db.query.polls(
       {
         where: {
           users_some: {
-            id_in: ["cjsup33f8ncat0b5090ow5tzd"]
+            id_in: [ctx.request.user.id]
           }
         }
       },
@@ -87,6 +87,59 @@ const Query = {
       label: key,
       count: sports[key]
     }));
+    return result;
+  },
+  async userCorrectPolls(parent, args, ctx, info) {
+    const correctHomeWin = await ctx.db.query.polls({
+      where: {
+        result: "HOME_WIN",
+        users_every: {
+          id_in: [ctx.request.user.id]
+        },
+        usersPrediction_every: {
+          user: {
+            id_in: [ctx.request.user.id]
+          },
+          predict: "HOME_WIN"
+        }
+      }
+    });
+    const correctAwayWin = await ctx.db.query.polls({
+      where: {
+        result: "AWAY_WIN",
+        users_every: {
+          id_in: [ctx.request.user.id]
+        },
+        usersPrediction_every: {
+          user: {
+            id_in: [ctx.request.user.id]
+          },
+          predict: "AWAY_WIN"
+        }
+      }
+    });
+    const correctDraw = await await ctx.db.query.polls({
+      where: {
+        result: "DRAW",
+        users_every: {
+          id_in: [ctx.request.user.id]
+        },
+        usersPrediction_every: {
+          user: {
+            id_in: [ctx.request.user.id]
+          },
+          predict: "DRAW"
+        }
+      }
+    });
+    const result = {
+      title: "Correct Polls",
+      results: [
+        { label: "Home Win", count: correctHomeWin.length },
+        { label: "Away Win", count: correctAwayWin.length },
+        { label: "Draw", count: correctDraw.length }
+      ]
+    };
     return result;
   }
 };
