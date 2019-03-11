@@ -87,7 +87,6 @@ const Query = {
       label: key,
       count: sports[key]
     }));
-    console.log(result);
     return result;
   }
 };
